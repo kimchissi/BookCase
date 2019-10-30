@@ -14,33 +14,34 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link BookListFragment.OnFragmentInteractionListener} interface
+ * {@link ViewPagerFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link BookListFragment#newInstance} factory method to
+ * Use the {@link ViewPagerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BookListFragment extends Fragment {
-
+public class ViewPagerFragment extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    private String[] bookCase;
-    private OnFragmentInteractionListener mListener;
-    private Context parent;
 
-    public BookListFragment() {
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private OnFragmentInteractionListener mListener;
+
+    public ViewPagerFragment() {
         // Required empty public constructor
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof SelectedBookListener) {
-            parent = context;
-        } else {
-            throw new RuntimeException("Interface not implemented");
-        }
-    }
-    public static BookListFragment newInstance(String[] param1) {
-        BookListFragment fragment = new BookListFragment();
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @return A new instance of fragment ViewPagerFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static ViewPagerFragment newInstance(String[] param1) {
+        ViewPagerFragment fragment = new ViewPagerFragment();
         Bundle args = new Bundle();
         args.putStringArray(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -51,7 +52,7 @@ public class BookListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            bookCase = getArguments().getStringArray(ARG_PARAM1);
+            mParam1 = getArguments().getString(ARG_PARAM1);
         }
     }
 
@@ -59,7 +60,7 @@ public class BookListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_book_list, container, false);
+        return inflater.inflate(R.layout.fragment_view_pager, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -69,6 +70,16 @@ public class BookListFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
 
     @Override
     public void onDetach() {
@@ -89,9 +100,5 @@ public class BookListFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-    interface SelectedBookListener {
-        void selectedBook(String bookTitle);
     }
 }
