@@ -23,4 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public void selectedBook(Book book) {
+        bookDetailsFragment.setTextView(book);
+    }
 }

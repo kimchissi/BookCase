@@ -20,12 +20,9 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class ViewPagerFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
+    private String[] bookCase;
     private OnFragmentInteractionListener mListener;
 
     public ViewPagerFragment() {
@@ -52,7 +49,7 @@ public class ViewPagerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            bookCase = getArguments().getStringArray(ARG_PARAM1);
         }
     }
 

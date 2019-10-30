@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 
 /**
@@ -24,7 +26,8 @@ public class BookListFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private String[] bookCase;
     private OnFragmentInteractionListener mListener;
-    private Context parent;
+    private MainactivityInterface parent;
+    private ListView listView;
 
     public BookListFragment() {
         // Required empty public constructor
@@ -34,7 +37,7 @@ public class BookListFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof SelectedBookListener) {
-            parent = context;
+            parent = (MainactivityInterface) context;
         } else {
             throw new RuntimeException("Interface not implemented");
         }
@@ -58,8 +61,22 @@ public class BookListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_book_list, container, false);
+        BookAdapter bookAdapter = new BookAdapter(getActivity(), bookCase);
+        View v = inflater.inflate(R.layout.fragment_book_list, container, false);
+        listView = v.findViewById(R.id.bookCaseListView);
+        listView.setAdapter(bookAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                parent.selectedBook((Book) adapterView.getAdapter().getItem(i));
+            }
+        });
+        return v;
+    }
+
+    interface MainactivityInterface {
+        void selectedBook(Book book);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -92,6 +109,6 @@ public class BookListFragment extends Fragment {
     }
 
     interface SelectedBookListener {
-        void selectedBook(String bookTitle);
+        void selectedBook(Book book);
     }
 }
