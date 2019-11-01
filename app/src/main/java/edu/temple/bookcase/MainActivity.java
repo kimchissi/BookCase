@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BookListFragment.MainactivityInterface {
 
     BookDetailsFragment bookDetailsFragment;
     BookListFragment bookListFragment;
@@ -20,8 +20,10 @@ public class MainActivity extends AppCompatActivity {
         bookDetailsFragment = new BookDetailsFragment();
         bookListFragment = BookListFragment.newInstance(bookTitles);
         viewPagerFragment = ViewPagerFragment.newInstance(bookTitles);
-
-
+        if (findViewById(R.id.frame1) != null){
+            getSupportFragmentManager().beginTransaction().add(R.id.frame1, viewPagerFragment).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.frame2, bookDetailsFragment).commit();
+        }
     }
 
     public void selectedBook(Book book) {
