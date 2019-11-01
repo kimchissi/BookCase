@@ -43,18 +43,18 @@ public class ViewPagerFragment extends Fragment {
             bookCase = bundle.getStringArray(BOOKCASE_KEY);
         }
         detailsFragmentArrayList = new ArrayList<>();
-        for (int i = 0; i < bookCase.length; i++) {
-            BookDetailsFragment bdf = new BookDetailsFragment();
-            Book book = new Book(bookCase[i]);
-            bdf.setTextView(book);
-            detailsFragmentArrayList.add(bdf);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
+        for (int i = 0; i < bookCase.length; i++) {;
+            Book book = new Book(bookCase[i]);
+            BookDetailsFragment bdf = BookDetailsFragment.newInstance(book);
+            bdf.setTextView(book);
+            detailsFragmentArrayList.add(bdf);
+        }
         viewPager = view.findViewById(R.id.bookViewPager);
         viewPager.setAdapter(new ViewPagerAdapter(getFragmentManager()));
         return view;
