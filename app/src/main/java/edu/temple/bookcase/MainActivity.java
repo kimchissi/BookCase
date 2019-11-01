@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         viewPagerFragment = ViewPagerFragment.newInstance(bookTitles);
         if (findViewById(R.id.frame2) != null){
             getSupportFragmentManager().popBackStack();
-            getSupportFragmentManager().beginTransaction().add(R.id.frame1, bookListFragment).commit();
+            getSupportFragmentManager().beginTransaction().addToBackStack(null).add(R.id.frame1, bookListFragment).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.frame2, bookDetailsFragment).commit();
         } else {
             getSupportFragmentManager().popBackStack();

@@ -52,7 +52,6 @@ public class ViewPagerFragment extends Fragment {
         for (int i = 0; i < bookCase.length; i++) {;
             Book book = new Book(bookCase[i]);
             BookDetailsFragment bdf = BookDetailsFragment.newInstance(book);
-            bdf.setTextView(book);
             detailsFragmentArrayList.add(bdf);
         }
         viewPager = view.findViewById(R.id.bookViewPager);
