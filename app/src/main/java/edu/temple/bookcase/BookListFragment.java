@@ -11,12 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
+import java.util.ArrayList;
 
 
 public class BookListFragment extends Fragment {
 
     private static final String BOOKCASE_KEY = "book case";
+    private ArrayList<Book> bookShelf;
     private String[] bookCase;
     private MainactivityInterface parent;
     private ListView listView;

@@ -15,9 +15,13 @@ import android.widget.TextView;
 public class BookDetailsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String BOOKCASE_KEY = "book case";
-    private Book book;
+    private static final String BOOKCASE_KEY = "bookCase";
+    private Book book = new Book();
+    private TextView idTextView;
     private TextView titleTextView;
+    private TextView authorTextView;
+    private TextView publishedTextView;
+    private TextView coverURLTextView;
 
     public BookDetailsFragment() {
         // Required empty public constructor
@@ -26,7 +30,7 @@ public class BookDetailsFragment extends Fragment {
     public static BookDetailsFragment newInstance(Book book) {
         BookDetailsFragment fragment = new BookDetailsFragment();
         Bundle args = new Bundle();
-        args.putString(BOOKCASE_KEY, book.getTitle());
+        args.putParcelable(BOOKCASE_KEY, book);
         fragment.setArguments(args);
         return fragment;
     }
@@ -35,7 +39,10 @@ public class BookDetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            book = new Book(getArguments().getString(BOOKCASE_KEY));
+            book = getArguments().getParcelable(BOOKCASE_KEY);
+            //book = new Book(getArguments().getInt(BOOKCASE_KEY), getArguments().getString(BOOKCASE_KEY),
+            //        getArguments().getString(BOOKCASE_KEY), getArguments().getInt(BOOKCASE_KEY),
+            //        getArguments().getString(BOOKCASE_KEY));
         }
 
     }
@@ -45,14 +52,27 @@ public class BookDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_book_details, container, false);
+        idTextView = v.findViewById(R.id.bookIdTextView);
         titleTextView = v.findViewById(R.id.bookTitleTextView);
+        authorTextView = v.findViewById(R.id.bookAuthorTextView);
+        publishedTextView = v.findViewById(R.id.bookPublishedTextView);
+        coverURLTextView = v.findViewById(R.id.bookCoverURLTextView);
+
+        idTextView.setText(book.getId());
         titleTextView.setText(book.getTitle());
+        authorTextView.setText(book.getAuthor());
+        publishedTextView.setText(book.getPublished());
+        coverURLTextView.setText(book.getCoverURL());
         return v;
     }
 
 
 
     public void setTextView(Book book) {
+        idTextView.setText(book.getId());
         titleTextView.setText(book.getTitle());
+        authorTextView.setText(book.getAuthor());
+        publishedTextView.setText(book.getPublished());
+        coverURLTextView.setText(book.getCoverURL());
     }
 }
