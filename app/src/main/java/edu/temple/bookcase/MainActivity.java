@@ -21,14 +21,13 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     BookDetailsFragment bookDetailsFragment;
     BookListFragment bookListFragment;
     ViewPagerFragment viewPagerFragment;
-    ArrayList<Book> bookShelf;
-
+    ArrayList<Book> bookShelf = new ArrayList<Book>();
     JSONArray bookListArray = new JSONArray();
-
     Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(@NonNull Message msg) {
             try {
+                bookShelf = new ArrayList<Book>();
                 bookListArray = new JSONArray(msg.obj.toString());
                 for (int i = 0; i < bookListArray.length(); i++) {
                     Book book = new Book();
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                     book.setPublished(jsonObject.getInt("published"));
                     book.setCoverURL(jsonObject.getString("cover_url"));
                     bookShelf.add(book);
-                    
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -82,10 +81,10 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                         tempResponse = reader.readLine();
                     }
 
-                    bookListArray = new JSONArray(response);
+                    JSONArray bookListArray = new JSONArray(response);
 
                     Message message = Message.obtain();
-                    message.obj = response;
+                    message.obj = bookListArray;
                     handler.sendMessage(message);
 
                 } catch (Exception e) {

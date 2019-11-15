@@ -55,10 +55,10 @@ public class BookDetailsFragment extends Fragment {
         publishedTextView = v.findViewById(R.id.bookPublishedTextView);
         coverURLTextView = v.findViewById(R.id.bookCoverURLTextView);
 
-        idTextView.setText(book.getId());
+        idTextView.setText(String.valueOf(book.getId()));
         titleTextView.setText(book.getTitle());
         authorTextView.setText(book.getAuthor());
-        publishedTextView.setText(book.getPublished());
+        publishedTextView.setText(String.valueOf(book.getPublished()));
         coverURLTextView.setText(book.getCoverURL());
         return v;
     }
@@ -66,10 +66,10 @@ public class BookDetailsFragment extends Fragment {
 
 
     public void setTextView(Book book) {
-        idTextView.setText(book.getId());
+        idTextView.setText(String.valueOf(book.getId()));
         titleTextView.setText(book.getTitle());
         authorTextView.setText(book.getAuthor());
-        publishedTextView.setText(book.getPublished());
+        publishedTextView.setText(String.valueOf(book.getPublished()));
         coverURLTextView.setText(book.getCoverURL());
     }
 }
