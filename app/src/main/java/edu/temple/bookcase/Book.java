@@ -1,7 +1,6 @@
 package edu.temple.bookcase;
 import android.os.Parcel;
 import android.os.Parcelable;
-import java.io.Serializable;
 
 public class Book implements Parcelable {
     private int id;
@@ -46,7 +45,7 @@ public class Book implements Parcelable {
         return this.id;
     }
 
-    public void setId(String title) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -62,7 +61,7 @@ public class Book implements Parcelable {
         return this.author;
     }
 
-    public void setAuthor(String title) {
+    public void setAuthor(String author) {
         this.author = author;
     }
 

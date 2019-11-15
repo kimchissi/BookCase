@@ -7,24 +7,30 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class BookAdapter extends BaseAdapter {
 
     Context context;
-    String[] bookCase;
+    ArrayList<Book> bookShelf;
 
-    public BookAdapter(Context context, String[] bookCase) {
+    public BookAdapter(Context context, ArrayList<Book> bookShelf) {
         this.context = context;
-        this.bookCase = bookCase;
+        this.bookShelf = bookShelf;
     }
 
     @Override
     public int getCount() {
-        return this.bookCase.length;
+        return this.bookShelf.size();
     }
 
     @Override
     public Object getItem(int position) {
-        Book book = new Book(bookCase[position]);
+        Book book = new Book(bookShelf.get(position).getId(),
+                bookShelf.get(position).getTitle(),
+                bookShelf.get(position).getAuthor(),
+                bookShelf.get(position).getPublished(),
+                bookShelf.get(position).getCoverURL());
         return book;
     }
 
@@ -41,7 +47,7 @@ public class BookAdapter extends BaseAdapter {
         } else {
             textView = new TextView(context);
         }
-        textView.setText(bookCase[position]);
+        textView.setText(bookShelf.get(position).getTitle());
         textView.setTextSize(40);
         textView.setTextColor(Color.GRAY);
         return textView;

@@ -13,9 +13,7 @@ import android.widget.TextView;
 
 
 public class BookDetailsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String BOOKCASE_KEY = "bookCase";
+    private static final String BOOK_KEY = "bookKey";
     private Book book = new Book();
     private TextView idTextView;
     private TextView titleTextView;
@@ -30,7 +28,7 @@ public class BookDetailsFragment extends Fragment {
     public static BookDetailsFragment newInstance(Book book) {
         BookDetailsFragment fragment = new BookDetailsFragment();
         Bundle args = new Bundle();
-        args.putParcelable(BOOKCASE_KEY, book);
+        args.putParcelable(BOOK_KEY, book);
         fragment.setArguments(args);
         return fragment;
     }
@@ -39,7 +37,7 @@ public class BookDetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            book = getArguments().getParcelable(BOOKCASE_KEY);
+            book = getArguments().getParcelable(BOOK_KEY);
             //book = new Book(getArguments().getInt(BOOKCASE_KEY), getArguments().getString(BOOKCASE_KEY),
             //        getArguments().getString(BOOKCASE_KEY), getArguments().getInt(BOOKCASE_KEY),
             //        getArguments().getString(BOOKCASE_KEY));
@@ -50,7 +48,6 @@ public class BookDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_book_details, container, false);
         idTextView = v.findViewById(R.id.bookIdTextView);
         titleTextView = v.findViewById(R.id.bookTitleTextView);

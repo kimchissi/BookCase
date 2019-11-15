@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,8 @@ import java.util.ArrayList;
 
 
 public class ViewPagerFragment extends Fragment {
-    private static final String BOOKCASE_KEY = "book case";
-    private String[] bookCase;
+    private static final String BOOKSHELF_KEY = "bookShelf";
+    private ArrayList<Book> bookShelf;
     private ArrayList<BookDetailsFragment> detailsFragmentArrayList;
     private ViewPager viewPager;
 
@@ -27,11 +28,12 @@ public class ViewPagerFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static ViewPagerFragment newInstance(String[] bookCase) {
+    public static ViewPagerFragment newInstance(ArrayList<Book> bookShelf) {
         ViewPagerFragment fragment = new ViewPagerFragment();
         Bundle args = new Bundle();
-        args.putStringArray(BOOKCASE_KEY, bookCase);
+        args.putParcelableArrayList(BOOKSHELF_KEY, bookShelf);
         fragment.setArguments(args);
+        Log.d("something unique", " " + bookShelf.toString());
         return fragment;
     }
 
@@ -40,7 +42,7 @@ public class ViewPagerFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            bookCase = bundle.getStringArray(BOOKCASE_KEY);
+            bookShelf = bundle.getParcelableArrayList(BOOKSHELF_KEY);
         }
         detailsFragmentArrayList = new ArrayList<>();
     }
@@ -49,9 +51,8 @@ public class ViewPagerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
-        for (int i = 0; i < bookCase.length; i++) {;
-            Book book = new Book(bookCase[i]);
-            BookDetailsFragment bdf = BookDetailsFragment.newInstance(book);
+        for (int i = 0; i < bookShelf.size(); i++) {
+            BookDetailsFragment bdf = BookDetailsFragment.newInstance(bookShelf.get(i));
             detailsFragmentArrayList.add(bdf);
         }
         viewPager = view.findViewById(R.id.bookViewPager);

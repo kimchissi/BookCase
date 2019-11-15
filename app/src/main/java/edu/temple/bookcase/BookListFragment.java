@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,8 @@ import java.util.ArrayList;
 
 public class BookListFragment extends Fragment {
 
-    private static final String BOOKCASE_KEY = "book case";
+    private static final String BOOKSHELF_KEY = "bookShelf";
     private ArrayList<Book> bookShelf;
-    private String[] bookCase;
     private MainactivityInterface parent;
     private ListView listView;
 
@@ -35,10 +35,10 @@ public class BookListFragment extends Fragment {
             throw new RuntimeException("Interface not implemented");
         }
     }
-    public static BookListFragment newInstance(String[] bookCase) {
+    public static BookListFragment newInstance(ArrayList<Book> bookShelf) {
         BookListFragment fragment = new BookListFragment();
         Bundle args = new Bundle();
-        args.putStringArray(BOOKCASE_KEY, bookCase);
+        args.putParcelableArrayList(BOOKSHELF_KEY, bookShelf);
         fragment.setArguments(args);
         return fragment;
     }
@@ -47,14 +47,14 @@ public class BookListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            bookCase = getArguments().getStringArray(BOOKCASE_KEY);
+            bookShelf = getArguments().getParcelableArrayList(BOOKSHELF_KEY);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        BookAdapter bookAdapter = new BookAdapter(getActivity(), bookCase);
+        BookAdapter bookAdapter = new BookAdapter(getActivity(), bookShelf);
         View v = inflater.inflate(R.layout.fragment_book_list, container, false);
         listView = v.findViewById(R.id.bookCaseListView);
         listView.setAdapter(bookAdapter);
@@ -71,6 +71,4 @@ public class BookListFragment extends Fragment {
     interface MainactivityInterface {
         void selectedBook(Book book);
     }
-
-
 }
