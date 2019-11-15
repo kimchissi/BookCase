@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                     book.setPublished(jsonObject.getInt("published"));
                     book.setCoverURL(jsonObject.getString("cover_url"));
                     bookShelf.add(book);
+                    
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
