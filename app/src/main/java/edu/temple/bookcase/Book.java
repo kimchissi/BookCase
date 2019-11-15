@@ -92,4 +92,7 @@ public class Book implements Parcelable {
         dest.writeInt(published);
         dest.writeString(coverURL);
     }
+
+    public static class BookSearchFragment {
+    }
 }

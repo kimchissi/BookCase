@@ -13,6 +13,7 @@
         <item>The Odyssey</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="jsonLink">https://kamorris.com/lab/audlib/booksearch.php</string>
+    <string name="jsonSearchLink">https://kamorris.com/lab/audlib/booksearch.php?search=</string>
+    <string name="searchButtonText">Go</string>
 </resources>
