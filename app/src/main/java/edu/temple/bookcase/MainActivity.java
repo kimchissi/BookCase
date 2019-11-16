@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        searchInput = findViewById(R.id.editText);
         goButton = findViewById(R.id.button);
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override
