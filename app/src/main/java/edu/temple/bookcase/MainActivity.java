@@ -2,6 +2,7 @@ package edu.temple.bookcase;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,9 +27,65 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     BookListFragment bookListFragment;
     ViewPagerFragment viewPagerFragment;
     ArrayList<Book> bookShelf = new ArrayList<Book>();
+    //ArrayList<Book> bookShelf;
     JSONArray bookListArray = new JSONArray();
+    //JSONArray bookListArray;
     EditText searchInput;
     Button goButton;
+    Fragment fragment;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        fragment = getSupportFragmentManager().findFragmentById(R.id.frame1);
+        searchInput = findViewById(R.id.editText);
+        goButton = findViewById(R.id.button);
+        goButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Thread tSearch = new Thread(){
+                    @Override
+                    public void run(){
+                        getBookSearch(searchInput.getText().toString());
+                    }
+                };tSearch.start();
+            }
+        });
+
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                URL bookListUrl;
+                try {
+                    bookListUrl = new URL(getResources().getString(R.string.jsonLink));
+                    BufferedReader reader = new BufferedReader(
+                            new InputStreamReader(
+                                    bookListUrl.openStream()));
+                    String response = "";
+                    String tempResponse;
+                    tempResponse = reader.readLine();
+                    while (tempResponse != null) {
+                        response = response + tempResponse;
+                        tempResponse = reader.readLine();
+                    }
+
+                    JSONArray bookListArray = new JSONArray(response);
+
+                    Message message = Message.obtain();
+                    message.obj = bookListArray;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        t.start();
+    }
 
 
     Handler handler = new Handler(new Handler.Callback() {
@@ -51,6 +108,14 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            //Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame1);
+            //if(fragment instanceof ViewPagerFragment) {
+
+            //} else if(fragment instanceof BookListFragment) {
+
+            //} else {
+            //    return false;
+            //}
             bookListFragment = BookListFragment.newInstance(bookShelf);
             bookDetailsFragment = BookDetailsFragment.newInstance(new Book(0, "", "", 0, ""));
             viewPagerFragment = ViewPagerFragment.newInstance(bookShelf);
@@ -102,62 +167,6 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         }
     });
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-
-        Thread t = new Thread() {
-            @Override
-            public void run() {
-                URL bookListUrl;
-                try {
-                    bookListUrl = new URL(getResources().getString(R.string.jsonLink));
-                    BufferedReader reader = new BufferedReader(
-                            new InputStreamReader(
-                                    bookListUrl.openStream()));
-                    String response = "";
-                    String tempResponse;
-                    tempResponse = reader.readLine();
-                    while (tempResponse != null) {
-                        response = response + tempResponse;
-                        tempResponse = reader.readLine();
-                    }
-
-                    JSONArray bookListArray = new JSONArray(response);
-
-                    Message message = Message.obtain();
-                    message.obj = bookListArray;
-                    handler.sendMessage(message);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        t.start();
-
-
-        searchInput = findViewById(R.id.editText);
-        goButton = findViewById(R.id.button);
-        goButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Thread tSearch = new Thread(){
-                    @Override
-                    public void run(){
-                        searchHandler.sendMessage(getBookSearch(searchInput.getText().toString()));
-                    }
-                };tSearch.start();
-            }
-        });
-
-
-
-        //bookTitles = getResources().getStringArray(R.array.bookCase);
-
-    }
 
     public Message getBookSearch(String searchWord) {
 

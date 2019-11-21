@@ -1,20 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
 
     <FrameLayout
         android:id="@+id/frame1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight=".3"></FrameLayout>
+        android:layout_width="207dp"
+        android:layout_height="869dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText"></FrameLayout>
 
     <FrameLayout
         android:id="@+id/frame2"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight=".7"></FrameLayout>
+        android:layout_width="373dp"
+        android:layout_height="862dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText"></FrameLayout>
 
+    <EditText
+        android:id="@+id/editText"
 
-</LinearLayout>
+        android:layout_width="430dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="70dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="63dp"
+        android:layout_marginEnd="38dp"
+        android:text="@string/searchButtonText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
