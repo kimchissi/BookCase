@@ -78,4 +78,8 @@ public class ViewPagerFragment extends Fragment {
         }
     }
 
+    public ArrayList<Book> getBookList() {
+        return bookShelf;
+    }
+
 }

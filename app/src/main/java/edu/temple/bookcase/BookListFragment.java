@@ -71,4 +71,8 @@ public class BookListFragment extends Fragment {
     interface MainactivityInterface {
         void selectedBook(Book book);
     }
+
+    public ArrayList<Book> getBookList() {
+        return bookShelf;
+    }
 }

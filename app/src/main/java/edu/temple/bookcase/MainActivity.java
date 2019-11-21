@@ -107,19 +107,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        searchInput = findViewById(R.id.editText);
-        goButton = findViewById(R.id.button);
-        goButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Thread tSearch = new Thread(){
-                    @Override
-                    public void run(){
-                        searchHandler.sendMessage(getBookSearch(searchInput.getText().toString()));
-                    }
-                };tSearch.start();
-            }
-        });
+
         Thread t = new Thread() {
             @Override
             public void run() {
@@ -151,7 +139,19 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         t.start();
 
 
-
+        searchInput = findViewById(R.id.editText);
+        goButton = findViewById(R.id.button);
+        goButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Thread tSearch = new Thread(){
+                    @Override
+                    public void run(){
+                        searchHandler.sendMessage(getBookSearch(searchInput.getText().toString()));
+                    }
+                };tSearch.start();
+            }
+        });
 
 
 
@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
 
         try {
-            bookListUrlSearch = new URL(getResources().getString(R.string.jsonSearchLink) + searchInput);
+            bookListUrlSearch = new URL(getResources().getString(R.string.jsonSearchLink) + searchWord);
             BufferedReader reader = new BufferedReader((
                     new InputStreamReader(bookListUrlSearch.openStream())));
 
