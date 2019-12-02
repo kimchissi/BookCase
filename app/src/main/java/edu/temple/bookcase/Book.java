@@ -8,6 +8,7 @@ public class Book implements Parcelable {
     private String author;
     private int published;
     private String coverURL;
+    private int duration;
 
     public Book() {
 
@@ -79,6 +80,9 @@ public class Book implements Parcelable {
         this.coverURL = coverURL;
     }
 
+    public int getDuration() { return this.duration;}
+
+    public void setDuration(int duration) { this.duration = duration;}
     @Override
     public int describeContents() {
         return 0;
