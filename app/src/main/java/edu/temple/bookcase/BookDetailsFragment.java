@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 
 
 public class BookDetailsFragment extends Fragment {
@@ -19,7 +21,7 @@ public class BookDetailsFragment extends Fragment {
     private TextView titleTextView;
     private TextView authorTextView;
     private TextView publishedTextView;
-    private TextView coverURLTextView;
+    private ImageView coverURLImageView;
 
     public BookDetailsFragment() {
         // Required empty public constructor
@@ -53,13 +55,18 @@ public class BookDetailsFragment extends Fragment {
         titleTextView = v.findViewById(R.id.bookTitleTextView);
         authorTextView = v.findViewById(R.id.bookAuthorTextView);
         publishedTextView = v.findViewById(R.id.bookPublishedTextView);
-        coverURLTextView = v.findViewById(R.id.bookCoverURLTextView);
+        coverURLImageView = v.findViewById(R.id.bookCoverURLTextView);
+
+
 
         idTextView.setText(String.valueOf(book.getId()));
         titleTextView.setText(book.getTitle());
         authorTextView.setText(book.getAuthor());
         publishedTextView.setText(String.valueOf(book.getPublished()));
-        coverURLTextView.setText(book.getCoverURL());
+        //coverURLImageView.setText(book.getCoverURL());
+        if(!book.getCoverURL().isEmpty()) {
+            Picasso.get().load(book.getCoverURL()).into(coverURLImageView);
+        }
         return v;
     }
 
@@ -70,6 +77,6 @@ public class BookDetailsFragment extends Fragment {
         titleTextView.setText(book.getTitle());
         authorTextView.setText(book.getAuthor());
         publishedTextView.setText(String.valueOf(book.getPublished()));
-        coverURLTextView.setText(book.getCoverURL());
+        //coverURLImageView.setText(book.getCoverURL());
     }
 }
