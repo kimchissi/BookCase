@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,8 +21,11 @@ import java.util.ArrayList;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 
-public class MainActivity extends AppCompatActivity implements BookListFragment.MainactivityInterface {
+import edu.temple.audiobookplayer.AudiobookService;
+
+public class MainActivity extends AppCompatActivity implements BookListFragment.MainactivityInterface, PlayerFragment.PlayerFragmentInterface {
 
     BookDetailsFragment bookDetailsFragment;
     BookListFragment bookListFragment;
@@ -33,6 +37,10 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     EditText searchInput;
     Button goButton;
     Fragment fragment;
+    boolean isConnected = false;
+    FrameLayout playerFrame;
+    AudiobookService.MediaControlBinder binder;
+    ServiceConnection serviceConnection;
 
 
 
@@ -118,10 +126,12 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             //}
             bookListFragment = BookListFragment.newInstance(bookShelf);
             bookDetailsFragment = BookDetailsFragment.newInstance(new Book(0, "", "", 0, ""));
+            getSupportFragmentManager().beginTransaction().remove(bookDetailsFragment);
             viewPagerFragment = ViewPagerFragment.newInstance(bookShelf);
             if (findViewById(R.id.frame2) != null){
                 getSupportFragmentManager().popBackStack();
                 getSupportFragmentManager().beginTransaction().addToBackStack(null).add(R.id.frame1, bookListFragment).commit();
+                getSupportFragmentManager().beginTransaction().remove(bookDetailsFragment).commit();
                 getSupportFragmentManager().beginTransaction().add(R.id.frame2, bookDetailsFragment).commit();
             } else {
                 getSupportFragmentManager().popBackStack();
@@ -154,10 +164,12 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             }
             bookListFragment = BookListFragment.newInstance(bookShelf);
             bookDetailsFragment = BookDetailsFragment.newInstance(new Book(0, "", "", 0, ""));
+            getSupportFragmentManager().beginTransaction().remove(bookDetailsFragment);
             viewPagerFragment = ViewPagerFragment.newInstance(bookShelf);
             if (findViewById(R.id.frame2) != null){
                 getSupportFragmentManager().popBackStack();
                 getSupportFragmentManager().beginTransaction().addToBackStack(null).add(R.id.frame1, bookListFragment).commit();
+                getSupportFragmentManager().beginTransaction().remove(bookDetailsFragment);
                 getSupportFragmentManager().beginTransaction().add(R.id.frame2, bookDetailsFragment).commit();
             } else {
                 getSupportFragmentManager().popBackStack();
@@ -199,5 +211,20 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
     public void selectedBook(Book book) {
         bookDetailsFragment.setTextView(book);
+    }
+
+    public void updateSeekBar(int progress) {
+        if (isConnected) {
+            binder.seekTo(progress);
+        }
+    }
+
+    public void pressPlayPause() {
+        binder.pause();
+    }
+
+    public void pressStop() {
+        binder.stop();
+        playerFrame.setVisibility(View.GONE);
     }
 }
