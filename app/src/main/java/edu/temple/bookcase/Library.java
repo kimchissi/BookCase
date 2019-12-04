@@ -43,6 +43,14 @@ public class Library implements Parcelable {
     }
 
     public void addBook(Book book) {
+        bookList.add(book);
+    }
+
+    public int size() {
+        return bookList.size();
+    }
+
+    public void clear() {
         bookList.clear();
     }
 
