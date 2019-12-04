@@ -3,6 +3,7 @@ package edu.temple.bookcase;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -22,12 +23,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import edu.temple.audiobookplayer.AudiobookService;
 
 public class MainActivity extends AppCompatActivity implements BookListFragment.MainactivityInterface, PlayerFragment.PlayerFragmentInterface {
 
+    FragmentManager fragmentManager;
     BookDetailsFragment bookDetailsFragment;
+    Book currentBook;
+    TextView nowPlayingTextView;
+    boolean isOnePane;
+    Library library;
     BookListFragment bookListFragment;
     ViewPagerFragment viewPagerFragment;
     ArrayList<Book> bookShelf = new ArrayList<Book>();
